@@ -1,0 +1,41 @@
+---------PROFILE PAGE-----------
+
+    USERNAME                            DONE
+    DESIDERI/OBBIETTIVI                 DONE
+    DATA DI NASCITA                     DONE    
+    PESO                                DONE
+    MISURE DEL CORPO                    DONE
+    TEST ARTICOLARI
+    CARTELLA MEDICA (CERTIFICATI ETC.)
+    NOTE E INFO                         DONE
+
+
+/////////////////////////////////
+    PAGINA DI ALLENAMENTI
+        NOTE
+        OBBIETTIVI
+        NOME
+        PERIODICITA
+            |
+            |
+            |
+            |_>LISTA DI ESERICIZI
+                    |
+                    |
+                    |
+                    |
+                    |->ESERCIZIO
+                        NOME
+                        DESCRIZIONE
+                        PARAMETRI *
+                        FUNZIONALITA
+                        AGGIUNGERE TIMESTAMP (ADD SERIES)
+//////////////////////////////////
+    CALENDARIO
+    USER HISTORY
+/////////////////////////////////
+
+*// PESO (KG), RITMO (BPM), DURATA (SEC), RANGE OF MOTION (FRAZIONI DI MOVIMENTO), RIPETIZIONI (DURATA/RITMO), 
+// RIPETIZIONI TOTALI, SERIE TOTALI, TEMPO TOTALE
+
+
