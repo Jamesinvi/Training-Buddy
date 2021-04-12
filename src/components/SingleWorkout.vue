@@ -14,9 +14,19 @@
         </div>
       </template>
 
-      <div class="card-content"></div>
-      <p>Timestamp: {{ completionDate }}</p>
-      <p>Day rating: {{ dayRating }} / 5</p>
+      <div class="card-content">
+        <p>Timestamp: {{ completionDate }}</p>
+        <p>Day rating: {{ dayRating }} / 5</p>
+
+        <b-button type="is-info">Show</b-button>
+        <b-button
+          v-on:click="deleteWorkout"
+          type="is-danger"
+          icon-left="delete"
+        >
+          Delete
+        </b-button>
+      </div>
     </b-collapse>
     <br />
   </section>
@@ -34,6 +44,7 @@ export default {
     return {
       name: this.$props.workout.workoutTemplate.name,
       dayRating: this.$props.workout.rating,
+      id: this.$props.workout.id,
     };
   },
   computed: {
@@ -47,6 +58,9 @@ export default {
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+    },
+    deleteWorkout() {
+      this.$emit("delete-workout", this.id);
     },
   },
 };
@@ -76,5 +90,8 @@ export default {
   align-items: center;
   padding: 6px;
   text-align: center;
+}
+.button {
+  margin: 10px;
 }
 </style>

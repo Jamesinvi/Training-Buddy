@@ -68,16 +68,49 @@
     </div>
     <div class="footer">
       <div>
-        <b-button type="is-success" v-on:click="startTimer">Start</b-button>
+        <b-button
+          type="is-success"
+          v-on:click="startTimer"
+          icon-right="play"
+        ></b-button>
       </div>
       <div>
-        <b-button type="is-danger" v-on:click="pauseTimer">Pause</b-button>
+        <b-button
+          type="is-danger"
+          v-on:click="pauseTimer"
+          icon-right="pause"
+        ></b-button>
       </div>
       <div>
-        <b-button type="is-warning " v-on:click="resetTimer">Reset</b-button>
+        <b-button
+          type="is-warning "
+          v-on:click="resetTimer"
+          icon-right="restart"
+        ></b-button>
       </div>
       <div>
         <b-button class="timer">{{ timerLeft }}</b-button>
+      </div>
+      <div>
+        <b-button
+          type="is-primary "
+          v-on:click="addMinute"
+          icon-right="plus"
+        ></b-button>
+      </div>
+      <div>
+        <b-button
+          type="is-primary "
+          v-on:click="subMinute"
+          icon-right="minus"
+        ></b-button>
+      </div>
+      <div>
+        <b-button
+          type="is-primary "
+          v-on:click="setZero"
+          icon-right="null"
+        ></b-button>
       </div>
     </div>
   </div>
@@ -88,6 +121,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import SingleExercise from "./SingleExercise.vue";
 import store from "../main.js";
+import { nanoid } from "nanoid";
 export default {
   name: "Workout",
   store: store,
@@ -137,6 +171,15 @@ export default {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
+    addMinute() {
+      this.currentTime = parseInt(this.currentTime) + 60;
+    },
+    subMinute() {
+      this.currentTime = parseInt(this.currentTime) - 60;
+    },
+    setZero() {
+      this.currentTime = 0;
+    },
     startTimer() {
       if (this.paused == false) return;
       else {
@@ -170,6 +213,7 @@ export default {
         date: new Date(),
         data: this.currentValues,
         rating: this.dayRating,
+        id: nanoid(),
       };
 
       let doc = await db

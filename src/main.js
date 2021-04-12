@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
+//import { nanoid } from "nanoid"
+
 
 import Workout from "./components/Workout.vue"
 import Login from "./components/Login.vue"
