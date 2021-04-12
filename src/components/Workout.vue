@@ -248,14 +248,8 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 .footer {
-  border-top: 1px solid rgba(95, 95, 95, 0.8);
+  border: 1px solid rgba(95, 95, 95, 0.8);
   box-shadow: 0px 0 9px rgba(173, 173, 173, 0.8);
   -webkit-position: sticky;
   z-index: 100;

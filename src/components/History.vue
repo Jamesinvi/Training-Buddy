@@ -61,21 +61,8 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.b-tabs {
-  background-color: white;
-}
-.box {
-  margin: 0px;
+.subtitle {
+  margin: 15px;
+  margin-bottom: 0px;
 }
 </style>

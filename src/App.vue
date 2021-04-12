@@ -67,7 +67,7 @@
           icon-left="arrow-left"
           @click="goBack"
         ></b-button>
-        <b-button class="button is-white">Training Buddy</b-button>
+        <h1 class="title-app">Training Buddy</h1>
         <b-button
           class="button is-white"
           icon-right="dots-horizontal"
@@ -75,7 +75,9 @@
         ></b-button>
       </div>
     </div>
-    <router-view></router-view>
+    <div class="main-content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -112,13 +114,19 @@ export default {
 </script>
 
 <style>
-#app {
+.main-content {
   font-family: "Aller", sans-serif;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin: 0px;
+  max-width: 800px;
+  display: inline-block;
+}
+body {
+  text-align: center;
 }
 .box {
   margin: 10px;
@@ -128,10 +136,18 @@ export default {
   box-shadow: 0px 0 9px rgba(119, 119, 119, 0.8);
 }
 .topnav {
+  min-width: 100%;
   position: -webkit-sticky; /* Safari */
   background: white;
   position: sticky;
   z-index: 35;
   top: 0;
+}
+.topnav .icon {
+  font-size: 1.8em;
+}
+.title-app {
+  margin: 15px;
+  font-size: 1.4em;
 }
 </style>

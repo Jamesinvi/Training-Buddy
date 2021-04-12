@@ -1,74 +1,140 @@
 <template>
-  <!-- eslint-disable-next-line vue/max-attributes-per-line -->
+  <div>
+    <div id="profile">
+      <div>
+        <h2 class="title">{{ username }}'s Profile</h2>
+      </div>
 
-  <div id="app">
-    <div class="box">
-      <h2 class="subtitle">{{ username }}'s Profile</h2>
-    </div>
-    <section class="box">
-      <label>Your Goal</label>
-      <b-field position="is-right">
-        <b-select placeholder="Select your goal" v-model="goal">
-          <option>Weight loss</option>
-          <option>Maintenance training</option>
-          <option>Other option</option>
-        </b-select>
-      </b-field>
-    </section>
-    <section class="box">
-      <label for="dateSelector">Date of Birth</label>
-      <b-field id="dateSelector">
-        <input type="date" v-model="dateOfBirth" />
-      </b-field>
+      <b-collapse class="card" animation="slide" aria-id="contentIdForA11y3">
+        <template #trigger="props">
+          <div
+            class="card-header"
+            role="button"
+            aria-controls="contentIdForA11y3"
+          >
+            <p class="card-header-title">Your goal</p>
+            <a class="card-header-icon">
+              <b-icon :icon="props.open ? 'menu-down' : 'menu-up'"> </b-icon>
+            </a>
+          </div>
+        </template>
+        <div class="card-content">
+          <b-field>
+            <b-select placeholder="Select your goal" v-model="goal">
+              <option>Weight loss</option>
+              <option>Maintenance training</option>
+              <option>Other option</option>
+            </b-select>
+          </b-field>
+        </div>
+      </b-collapse>
       <br />
-      <b-field label="Weight (in kg)">
-        <b-numberinput v-model="weight" placeholder="75"></b-numberinput>
-      </b-field>
-      <b-field label="Height (in cm)">
-        <b-numberinput v-model="height" placeholder="175"></b-numberinput>
-      </b-field>
-    </section>
-    <section class="box">
-      <b-field label="Shoulders (in cm)">
-        <b-numberinput
-          v-model="shouldersMeasurement"
-          placeholder="175"
-        ></b-numberinput>
-      </b-field>
-      <b-field label="Chest (in cm)">
-        <b-numberinput
-          v-model="chestMeasurement"
-          placeholder="175"
-        ></b-numberinput>
-      </b-field>
-      <b-field label="Bicep (in cm)">
-        <b-numberinput
-          v-model="bicepMeasurement"
-          placeholder="175"
-        ></b-numberinput>
-      </b-field>
-      <b-field label="Waist (in cm)">
-        <b-numberinput
-          v-model="waistMeasurement"
-          placeholder="175"
-        ></b-numberinput>
-      </b-field>
-      <b-field label="Thigh (in cm)">
-        <b-numberinput
-          v-model="thighMeasurement"
-          placeholder="175"
-        ></b-numberinput>
-      </b-field>
-    </section>
-    <section class="box">
-      <b-field label="Additional Info">
-        <b-input v-model="extraInfo" maxlength="200" type="textarea"></b-input>
-      </b-field>
-    </section>
-    <div class="buttons">
-      <b-button type="is-primary" v-on:click="sendData" expanded
-        >Apply Changes</b-button
-      >
+      <b-collapse class="card" animation="slide" aria-id="contentIdForA11y3">
+        <template #trigger="props">
+          <div
+            class="card-header"
+            role="button"
+            aria-controls="contentIdForA11y3"
+          >
+            <p class="card-header-title">General Info</p>
+            <a class="card-header-icon">
+              <b-icon :icon="props.open ? 'menu-down' : 'menu-up'"> </b-icon>
+            </a>
+          </div>
+        </template>
+        <div class="card-content">
+          <label for="dateSelector">Date of Birth</label>
+          <b-field id="dateSelector">
+            <input type="date" v-model="dateOfBirth" />
+          </b-field>
+          <br />
+          <b-field label="Weight (in kg)">
+            <b-numberinput v-model="weight" placeholder="75"></b-numberinput>
+          </b-field>
+          <b-field label="Height (in cm)">
+            <b-numberinput v-model="height" placeholder="175"></b-numberinput>
+          </b-field>
+        </div>
+      </b-collapse>
+      <br />
+      <b-collapse class="card" animation="slide" aria-id="contentIdForA11y3">
+        <template #trigger="props">
+          <div
+            class="card-header"
+            role="button"
+            aria-controls="contentIdForA11y3"
+          >
+            <p class="card-header-title">Measurements</p>
+            <a class="card-header-icon">
+              <b-icon :icon="props.open ? 'menu-down' : 'menu-up'"> </b-icon>
+            </a>
+          </div>
+        </template>
+        <div class="card-content">
+          <b-field label="Shoulders (in cm)">
+            <b-numberinput
+              v-model="shouldersMeasurement"
+              placeholder="175"
+            ></b-numberinput>
+          </b-field>
+          <b-field label="Chest (in cm)">
+            <b-numberinput
+              v-model="chestMeasurement"
+              placeholder="175"
+            ></b-numberinput>
+          </b-field>
+          <b-field label="Bicep (in cm)">
+            <b-numberinput
+              v-model="bicepMeasurement"
+              placeholder="175"
+            ></b-numberinput>
+          </b-field>
+          <b-field label="Waist (in cm)">
+            <b-numberinput
+              v-model="waistMeasurement"
+              placeholder="175"
+            ></b-numberinput>
+          </b-field>
+          <b-field label="Thigh (in cm)">
+            <b-numberinput
+              v-model="thighMeasurement"
+              placeholder="175"
+            ></b-numberinput>
+          </b-field>
+        </div>
+      </b-collapse>
+      <br />
+      <b-collapse class="card" animation="slide" aria-id="contentIdForA11y3">
+        <template #trigger="props">
+          <div
+            class="card-header"
+            role="button"
+            aria-controls="contentIdForA11y3"
+          >
+            <p class="card-header-title">Other</p>
+            <a class="card-header-icon">
+              <b-icon :icon="props.open ? 'menu-down' : 'menu-up'"> </b-icon>
+            </a>
+          </div>
+        </template>
+        <div class="card-content">
+          <br />
+          <b-field label="Additional Info">
+            <b-input
+              v-model="extraInfo"
+              maxlength="200"
+              type="textarea"
+            ></b-input>
+          </b-field>
+        </div>
+      </b-collapse>
+    </div>
+    <div class="footer">
+      <div>
+        <b-button type="is-primary" v-on:click="sendData" expanded
+          >Apply Changes</b-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -220,24 +286,37 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.footer {
+  border: 1px solid rgba(95, 95, 95, 0.8);
+  box-shadow: 0px 0 9px rgba(173, 173, 173, 0.8);
+  -webkit-position: sticky;
+  z-index: 100;
+  position: sticky;
+  background: white;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
+  padding: 15px;
 }
 
-.buttons {
-  width: 100%;
-  padding: 8px;
-  z-index: 50;
-  background-color: white;
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  bottom: 0;
-}
 .box {
   margin: 10px;
   box-shadow: 0px 0 9px rgba(173, 173, 173, 0.8);
+}
+.card {
+  box-shadow: 0px 0 9px rgba(119, 119, 119, 0.8);
+}
+.card-content {
+  padding: 5px;
+}
+.header {
+  font-weight: bold;
+}
+.title {
+  margin: 15px;
+  font-weight: bold;
+}
+#profile {
+  margin: 15px;
 }
 </style>

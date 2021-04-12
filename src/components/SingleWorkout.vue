@@ -74,22 +74,11 @@ export default {
 .card-content {
   padding: 5px;
 }
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: center;
-}
 .header {
   font-weight: bold;
 }
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(173, 173, 173, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 6px;
-  text-align: center;
+section {
+  padding: 16px;
 }
 .button {
   margin: 10px;

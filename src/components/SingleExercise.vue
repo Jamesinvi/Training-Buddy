@@ -177,7 +177,7 @@ export default {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-content: center;
 }
 .header {
