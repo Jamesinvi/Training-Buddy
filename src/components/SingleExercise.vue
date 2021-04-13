@@ -26,6 +26,7 @@
             <b-numberinput
               size="is-small"
               controls-position="compact"
+              min="0"
               v-model="reps"
             ></b-numberinput>
           </div>
@@ -34,6 +35,7 @@
           <div class="grid-item">
             <b-numberinput
               size="is-small"
+              min="0"
               controls-position="compact"
               v-model="time"
               step="10"
@@ -44,6 +46,7 @@
           <div class="grid-item">
             <b-numberinput
               size="is-small"
+              min="0"
               controls-position="compact"
               v-model="rest"
               step="10"
