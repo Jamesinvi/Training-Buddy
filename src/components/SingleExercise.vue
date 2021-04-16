@@ -65,7 +65,9 @@
                 <option value="full">Full Reps</option>
                 <option value="half">Half Reps</option>
                 <option value="quarter">Quarter Reps</option>
-                <option value="assisted">Assisted</option>
+                <option value="assisted full">Assisted Full</option>
+                <option value="assisted half">Assisted Half</option>
+                <option value="assisted quarter">Assisted Quarter</option>
               </b-select>
             </b-field>
           </div>
