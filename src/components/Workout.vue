@@ -13,11 +13,32 @@
               v-bind:exercise-name="exercise.name"
               v-bind:exercise-description="exercise.description"
               v-bind:exercise-id="exercise.id"
+              v-bind:goal-exercise-weight="exercise.weight"
               v-bind:goal-exercise-reps="exercise.reps"
               v-bind:goal-exercise-time="exercise.time"
               v-bind:goal-exercise-bpm="exercise.bpm"
               v-bind:goal-exercise-rest="exercise.rest"
               v-bind:goal-exercise-type="exercise.type"
+              v-bind:isExtra="false"
+            >
+            </SingleExercise>
+          </li>
+          <li
+            v-for="(exercise, index) in addedExercises"
+            :key="`exercise-${index}`"
+          >
+            <SingleExercise
+              v-on:new-data="updateCurrentValues"
+              v-bind:exercise-name="exercise.name"
+              v-bind:exercise-description="exercise.description"
+              v-bind:exercise-id="exercise.id"
+              v-bind:goal-exercise-weight="exercise.weight"
+              v-bind:goal-exercise-reps="exercise.reps"
+              v-bind:goal-exercise-time="exercise.time"
+              v-bind:goal-exercise-bpm="exercise.bpm"
+              v-bind:goal-exercise-rest="exercise.rest"
+              v-bind:goal-exercise-type="exercise.type"
+              v-bind:isExtra="true"
             >
             </SingleExercise>
           </li>
@@ -58,9 +79,35 @@
             </div>
           </b-collapse>
         </ul>
+
+        <b-modal v-model="showAddExerciseModal" scroll="keep">
+          <div class="card">
+            <div class="card-content">
+              <div class="dynamic-grid">
+                <div v-for="exercise in filteredExercises" :key="exercise.id">
+                  <b-button
+                    v-on:click="addExercise(exercise.id)"
+                    expanded
+                    outlined
+                    type="is-primary"
+                    class="grid-item"
+                    >{{ exercise.name }}
+                  </b-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </b-modal>
       </b-tab-item>
     </b-tabs>
 
+    <b-button
+      class="right"
+      type="is-success"
+      v-on:click="showModal"
+      icon-right="plus"
+      >Add exercise</b-button
+    >
     <div class="box">
       <b-button type="is-primary" v-on:click="markComplete" expanded
         >Mark as Complete</b-button
@@ -131,11 +178,13 @@ export default {
   data() {
     return {
       timerIntervals: [],
+      addedExercises: [],
       activeTab: 0,
       currentTimes: [],
       originalTimes: [],
       currentValues: {},
       dayRating: null,
+      showAddExerciseModal: false,
     };
   },
   created() {
@@ -166,6 +215,13 @@ export default {
         this.$set(this.currentTimes, this.activeTab, newValue);
       },
     },
+    filteredExercises() {
+      return this.$store.state.b.workouts[this.activeTab].exercises.filter(
+        (item) => {
+          return item.name != "Rest";
+        }
+      );
+    },
   },
   methods: {
     goBack() {
@@ -180,6 +236,19 @@ export default {
     setZero() {
       this.currentTime = 0;
     },
+    showModal() {
+      this.showAddExerciseModal = !this.showAddExerciseModal;
+    },
+    addExercise(id) {
+      let localID = id;
+      let toAdd = this.$store.state.b.workouts[this.activeTab].exercises.filter(
+        (item) => {
+          return item.id == localID;
+        }
+      );
+      this.addedExercises.push(toAdd[0]);
+      this.showAddExerciseModal = false;
+    },
     startTimer() {
       if (this.paused == false) return;
       else {
@@ -190,11 +259,11 @@ export default {
         this.paused = false;
       }
     },
-    updateCurrentValues(exerciseName, property, val) {
-      if (this.currentValues[exerciseName] == null) {
-        this.currentValues[exerciseName] = {};
+    updateCurrentValues(exerciseName, property, val, uid) {
+      if (this.currentValues[exerciseName + " " + uid] == null) {
+        this.currentValues[exerciseName + " " + uid] = {};
       }
-      this.currentValues[exerciseName][property] = val;
+      this.currentValues[exerciseName + " " + uid][property] = val;
     },
     pauseTimer() {
       this.paused = true;
@@ -276,5 +345,23 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.right {
+  float: right;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+.box {
+  padding: 5px;
+  margin: 10px;
+  box-shadow: none;
+  border: none;
+}
+.dynamic-grid {
+  display: grid;
+  gap: 0.3rem;
+}
+.grid-item {
+  padding: 1px;
 }
 </style>

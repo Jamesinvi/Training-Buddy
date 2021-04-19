@@ -28,6 +28,16 @@ export default {
   data() {
     return {};
   },
+  async created() {
+    const db = firebase.firestore();
+    let dbHistory = await db
+      .collection("users")
+      .doc(this.$store.b.user.uid)
+      .get();
+    store.commit("setCompletedWorkouts", dbHistory.data().completedWorkouts, {
+      root: true,
+    });
+  },
   methods: {
     async deleteWorkout(id) {
       const db = firebase.firestore();

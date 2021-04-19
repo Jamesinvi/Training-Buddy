@@ -1,6 +1,11 @@
 <template>
   <section>
-    <b-collapse class="card" animation="slide" aria-id="contentIdForA11y3">
+    <b-collapse
+      class="card"
+      :open.sync="showCard"
+      animation="slide"
+      aria-id="contentIdForA11y3"
+    >
       <template #trigger="props">
         <div
           class="card-header"
@@ -15,7 +20,33 @@
       </template>
 
       <div class="card-content">
-        <div class="grid-container">
+        <div v-if="this.name == 'Rest'" class="grid-container-half">
+          <b-progress
+            class="grid-item-wide"
+            v-bind:type="{
+              'is-info': this.time < this.timeGoal,
+              'is-danger': this.time >= this.timeGoal,
+            }"
+            size="is-medium"
+            :max="this.timeGoal"
+            :value="this.time || 0"
+            show-value
+            >{{ this.time || 0 }} / {{ this.timeGoal }} seconds</b-progress
+          >
+          <b-button
+            type="is-success"
+            class="grid-item-halfwide"
+            v-on:click="startRest"
+            >Start Rest</b-button
+          >
+          <b-button
+            class="grid-item-halfwide"
+            type="is-danger"
+            v-on:click="endRest"
+            >End Rest</b-button
+          >
+        </div>
+        <div v-if="this.name != 'Rest'" class="grid-container">
           <div class="grid-item header">Category</div>
           <div class="grid-item header">Goal</div>
           <div class="grid-item header">You</div>
@@ -30,38 +61,27 @@
               v-model="reps"
             ></b-numberinput>
           </div>
-          <div class="grid-item header">Time</div>
-          <div class="grid-item">{{ timeGoal }}</div>
+          <div class="grid-item header">Weight</div>
+          <div class="grid-item">{{ weightGoal }} kg</div>
           <div class="grid-item">
             <b-numberinput
               size="is-small"
-              min="0"
               controls-position="compact"
-              v-model="time"
-              step="10"
+              min="-50"
+              step="5"
+              v-model="weight"
             ></b-numberinput>
           </div>
-          <div class="grid-item header">Rest</div>
-          <div class="grid-item">{{ restGoal }}</div>
-          <div class="grid-item">
-            <b-numberinput
-              size="is-small"
-              min="0"
-              controls-position="compact"
-              v-model="rest"
-              step="10"
-            ></b-numberinput>
-          </div>
-          <div class="grid-item header">Rythm</div>
+          <!-- <div class="grid-item header">Rythm</div>
           <div class="grid-item">{{ bpmGoal }} BpM</div>
           <div class="grid-item">
             <b-input v-bind:value="computedBpm"></b-input>
-          </div>
+          </div> -->
           <div class="grid-item header">Type</div>
           <div class="grid-item">{{ typeGoal }}</div>
           <div class="grid-item">
             <b-field>
-              <b-select v-model="type" placeholder="type">
+              <b-select v-model="type" placeholder="full">
                 <option value="full">Full Reps</option>
                 <option value="half">Half Reps</option>
                 <option value="quarter">Quarter Reps</option>
@@ -71,6 +91,11 @@
               </b-select>
             </b-field>
           </div>
+        </div>
+        <div class="box" v-if="this.name != 'Rest'">
+          <b-button type="is-primary" v-on:click="createTimestamp" expanded
+            >Complete Exercise</b-button
+          >
         </div>
       </div>
     </b-collapse>
@@ -90,12 +115,14 @@ export default {
     goalExerciseReps: Number,
     goalExerciseTime: Number,
     goalExerciseBpm: Number,
-    goalExerciseRest: Number,
+    goalExerciseWeight: Number,
     goalExerciseType: String,
     actualExerciseReps: Number,
     actualExerciseRest: Number,
-    actualyExerciseType: String,
+    actualExerciseType: String,
+    actualExerciseWeight: String,
     actualExerciseTime: Number,
+    isExtra: Boolean,
   },
   data() {
     return {
@@ -104,18 +131,20 @@ export default {
       id: this.$props.exerciseId,
       repGoal: this.$props.goalExerciseReps,
       timeGoal: this.$props.goalExerciseTime,
-      restGoal: this.$props.goalExerciseRest,
       typeGoal: this.$props.goalExerciseType,
+      weightGoal: this.$props.goalExerciseWeight,
       bpmGoal:
         this.$props.goalExerciseReps / (this.$props.goalExerciseTime / 60),
       reps: this.$props.actualExerciseReps,
-      rest: this.$props.actualExerciseRest,
       time: this.$props.actualExerciseTime,
+      weight: this.$props.actualExerciseWeight,
       type: null,
       notes: null,
+      timestamp: null,
+      showCard: true,
+      restTimerInterval: null,
     };
   },
-
   methods: {
     completedMessage: function () {
       return this.complete ? "yes" : "no";
@@ -123,8 +152,23 @@ export default {
     markComplete() {
       this.complete = true;
     },
+    startRest() {
+      if (this.time == null) this.time = 0;
+      this.restTimerInterval = setInterval(() => {
+        this.time++;
+      }, 1000);
+    },
+    endRest() {
+      if (this.time == null) this.time = 0;
+      clearInterval(this.restTimerInterval);
+      this.createTimestamp();
+    },
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+    },
+    createTimestamp() {
+      this.timestamp = new Date();
+      this.showCard = !this.showCard;
     },
   },
   computed: {
@@ -133,7 +177,6 @@ export default {
       return this.$route.params.username;
     },
     complete() {
-      console.log(this.$store.a);
       if (!this.$store.getters.getCompletedExercises) return false;
       if (
         this.$store.getters.getCompletedExercises.indexOf(
@@ -153,21 +196,29 @@ export default {
       }
     },
   },
+  created() {
+    this.reps = 0;
+    this.weight = 0;
+    this.type = "full";
+  },
   watch: {
     reps: function (newVal) {
-      this.$emit("new-data", this.exerciseName, "reps", newVal);
+      this.$emit("new-data", this.exerciseName, "reps", newVal, this.uid);
     },
-    rest: function (newVal) {
-      this.$emit("new-data", this.exerciseName, "rest", newVal);
+    weight: function (newVal) {
+      this.$emit("new-data", this.exerciseName, "weight", newVal, this.uid);
     },
     time: function (newVal) {
-      this.$emit("new-data", this.exerciseName, "time", newVal);
+      this.$emit("new-data", this.exerciseName, "time", newVal, this.uid);
     },
     type: function (newVal) {
-      this.$emit("new-data", this.exerciseName, "type", newVal);
+      this.$emit("new-data", this.exerciseName, "type", newVal, this.uid);
     },
     notes: function (newVal) {
-      this.$emit("new-data", this.exerciseName, "notes", newVal);
+      this.$emit("new-data", this.exerciseName, "notes", newVal, this.uid);
+    },
+    timestamp: function (newVal) {
+      this.$emit("new-data", this.exerciseName, "timestamp", newVal, this.uid);
     },
   },
 };
@@ -175,6 +226,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.box {
+  margin: 5px;
+  padding: 5px;
+}
 .card {
   box-shadow: 0px 0 9px rgba(119, 119, 119, 0.8);
 }
@@ -184,6 +239,11 @@ export default {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+}
+.grid-container-half {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   justify-content: center;
 }
 .header {
@@ -197,5 +257,21 @@ export default {
   align-items: center;
   padding: 6px;
   text-align: center;
+}
+.grid-item-wide {
+  grid-column: span 2 / auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 6px;
+  padding: 6px;
+}
+.grid-item-halfwide {
+  grid-column: 1fr;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 6px;
+  padding: 6px;
 }
 </style>
