@@ -216,11 +216,12 @@ export default {
       },
     },
     filteredExercises() {
-      return this.$store.state.b.workouts[this.activeTab].exercises.filter(
-        (item) => {
-          return item.name != "Rest";
-        }
-      );
+      return this.$store.state.b.workouts[this.activeTab].exercises;
+      // return this.$store.state.b.workouts[this.activeTab].exercises.filter(
+      //   (item) => {
+      //     return item.name != "Rest";
+      //   }
+      // );
     },
   },
   methods: {
