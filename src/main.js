@@ -152,7 +152,7 @@ const moduleB = {
             id: 1,
             time: 120,
             weight: 0,
-            reps: 1,
+            reps: 120,
             bpm: 0,
             type: "full",
             tag: "cardio",
@@ -262,7 +262,7 @@ const moduleB = {
           {
             name: "Tricipiti Elastico",
             description: "Brief description here",
-            id: 9,
+            id: 29,
             time: 0,
             reps: 15,
             weight: 35,

@@ -19,6 +19,9 @@
               v-bind:goal-exercise-bpm="exercise.bpm"
               v-bind:goal-exercise-rest="exercise.rest"
               v-bind:goal-exercise-type="exercise.type"
+              v-bind:actual-exercise-reps="0"
+              v-bind:actual-exercise-weight="0"
+              v-bind:actual-exercise-type="'full'"
               v-bind:isExtra="false"
             >
             </SingleExercise>
@@ -38,6 +41,9 @@
               v-bind:goal-exercise-bpm="exercise.bpm"
               v-bind:goal-exercise-rest="exercise.rest"
               v-bind:goal-exercise-type="exercise.type"
+              v-bind:actual-exercise-reps="0"
+              v-bind:actual-exercise-weight="0"
+              v-bind:actual-exercise-type="'full'"
               v-bind:isExtra="true"
             >
             </SingleExercise>

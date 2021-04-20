@@ -59,7 +59,8 @@
               controls-position="compact"
               min="0"
               v-model="reps"
-            ></b-numberinput>
+              >0</b-numberinput
+            >
           </div>
           <div class="grid-item header">Weight</div>
           <div class="grid-item">{{ weightGoal }} kg</div>
@@ -120,7 +121,7 @@ export default {
     actualExerciseReps: Number,
     actualExerciseRest: Number,
     actualExerciseType: String,
-    actualExerciseWeight: String,
+    actualExerciseWeight: Number,
     actualExerciseTime: Number,
     isExtra: Boolean,
   },
@@ -138,7 +139,7 @@ export default {
       reps: this.$props.actualExerciseReps,
       time: this.$props.actualExerciseTime,
       weight: this.$props.actualExerciseWeight,
-      type: null,
+      type: this.$props.actualExerciseType,
       notes: null,
       timestamp: null,
       showCard: true,
@@ -195,11 +196,6 @@ export default {
         return 0;
       }
     },
-  },
-  created() {
-    this.reps = 0;
-    this.weight = 0;
-    this.type = "full";
   },
   watch: {
     reps: function (newVal) {
