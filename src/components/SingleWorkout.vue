@@ -20,7 +20,7 @@
 
         <b-button type="is-info">Show</b-button>
         <b-button
-          v-on:click="deleteWorkout"
+          @click="confirm"
           type="is-danger"
           icon-left="delete"
         >
@@ -61,6 +61,15 @@ export default {
     },
     deleteWorkout() {
       this.$emit("delete-workout", this.id);
+    },
+    confirm() {
+      this.$buefy.dialog.confirm({
+          title: 'Deleting workout',
+          message: 'Are you sure you want to <b>delete</b> this workout? This action cannot be undone.',
+          confirmText: 'Delete Workout',
+          type: 'is-danger',
+          onConfirm: () => this.deleteWorkout()
+      })
     },
   },
 };

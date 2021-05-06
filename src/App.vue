@@ -108,6 +108,8 @@ export default {
         .then(() => {
           this.$router.push({ name: "Login" });
         });
+        this.$store.dispatch("a/logout");
+        this.$store.dispatch("b/logout");
     },
   },
 };

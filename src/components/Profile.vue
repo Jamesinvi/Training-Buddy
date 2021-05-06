@@ -2,7 +2,7 @@
   <div>
     <div id="profile">
       <div>
-        <h2 class="title">{{ username }}'s Profile</h2>
+        <h2 class="title">{{ username }} Profile</h2>
       </div>
 
       <b-collapse class="card" animation="slide" aria-id="contentIdForA11y3">
@@ -146,29 +146,12 @@ import store from "../main.js";
 export default {
   name: "Profile",
   store: store,
-  // data() {
-  //   return {
-  //     userProfileInfo: {
-  //       goal: null,
-  //       height: this.$store.state.b.user.profileInfo.height,
-  //       dateOfBirth: this.$store.state.b.user.profileInfo.dateOfBirth,
-  //       weight: this.$store.state.b.user.profileInfo.weight,
-  //       shouldersMeasurement: this.$store.state.b.user.profileInfo
-  //         .shouldersMeasurement,
-  //       bicepMeasurement: this.$store.state.b.user.profileInfo.bicepMeasurement,
-  //       chestMeasurement: this.$store.state.b.user.profileInfo.chestMeasurement,
-  //       waistMeasurement: this.$store.state.b.user.profileInfo.waistMeasurement,
-  //       thighMeasurement: this.$store.state.b.user.profileInfo.thighMeasurement,
-  //       extraInfo: this.$store.state.b.user.profileInfo.extraInfo,
-  //     },
-  //   };
-  // },
   computed: {
     username() {
       if (this.$store.state.b.user.data.displayName) {
         return this.capitalizeFirstLetter(
           this.$store.state.b.user.data.displayName
-        );
+        ) + "' s ";
       } else {
         return "Your ";
       }
@@ -254,17 +237,6 @@ export default {
       },
     },
   },
-  watch: {
-    // userProfileInfo: {
-    //   handler() {
-    //     console.log("profile data changed");
-    //     this.$store.dispatch("b/setUserProfileData", this.userProfileInfo, {
-    //       root: true,
-    //     });
-    //   },
-    //   deep: true,
-    // },
-  },
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
@@ -273,6 +245,7 @@ export default {
       return myString.charAt(0).toUpperCase() + myString.slice(1);
     },
     sendData() {
+      //get the data from the vuex store and push it to firebase
       firebase
         .firestore()
         .collection("users")

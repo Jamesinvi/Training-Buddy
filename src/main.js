@@ -357,6 +357,22 @@ const moduleB = {
       } else {
         console.log("commit had null argument");
       }
+    },
+    logout({commit}){
+      commit("SET_LOGGED_IN", false);
+      commit("SET_USER", null);
+      commit("SET_PROFILE_DATA",  {
+        goal: null,
+        height: null,
+        dateOfBirth: Date,
+        weight: null,
+        shouldersMeasurement: null,
+        bicepMeasurement: null,
+        chestMeasurement: null,
+        waistMeasurement: null,
+        thighMeasurement: null,
+        extraInfo: null,
+      });
     }
   },
 }
@@ -376,6 +392,11 @@ const moduleA = {
     },
     setCompletedWorkouts(state, value) {
       state.completedWorkouts = value;
+    },
+  },
+  actions: {
+    logout({commit}){
+      commit("setCompletedWorkouts", null);
     }
   }
 }

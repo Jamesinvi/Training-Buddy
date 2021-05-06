@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <section>
+    <form    @submit.prevent="login">
       <div class="box">
         <h1 class="title">Login</h1>
 
@@ -19,11 +19,12 @@
         <p>No account?</p>
         <router-link :to="{ path: '/register' }">Create a new one.</router-link>
         <br />
-        <b-button type="is-primary" v-on:click="submit" expanded
+        <b-button type="is-primary" v-on:click="login"  expanded
           >Login</b-button
         >
+        <input v-show="false" type="submit" value="Submit">
       </div>
-    </section>
+    </form>
     <!-- <router-link :to="{ path: '/workout/' }" custom v-slot="{ navigate }">
       <button class="widebutton" @click="navigate">Go to Workout</button>
     </router-link> -->
@@ -48,7 +49,8 @@ export default {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
-    submit() {
+    login() {
+      //sign in
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
