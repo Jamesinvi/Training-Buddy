@@ -18,12 +18,8 @@
         <p>Timestamp: {{ completionDate }}</p>
         <p>Day rating: {{ dayRating }} / 5</p>
 
-        <b-button type="is-info">Show</b-button>
-        <b-button
-          @click="confirm"
-          type="is-danger"
-          icon-left="delete"
-        >
+        <b-button @click="showWorkout" type="is-info">Show</b-button>
+        <b-button @click="confirm" type="is-danger" icon-left="delete">
           Delete
         </b-button>
       </div>
@@ -34,8 +30,11 @@
 
 <script>
 import store from "../main.js";
+import firebase from "firebase/app";
+
+import "firebase/auth";
 export default {
-  name: "SingleExercise",
+  name: "SingleWorkout",
   store: store,
   props: {
     workout: Object,
@@ -62,14 +61,25 @@ export default {
     deleteWorkout() {
       this.$emit("delete-workout", this.id);
     },
+    async showWorkout() {
+      const db = firebase.firestore();
+      let doc = await db
+        .collection("users")
+        .doc(this.$store.state.b.user.data.uID)
+        .get();
+      let completedWorkouts = doc.data().completedWorkouts;
+      let result = completedWorkouts.filter((item) => item.id == this.id)[0];
+      this.$router.push({ name: "WorkoutModify", params: { id: result.id } });
+    },
     confirm() {
       this.$buefy.dialog.confirm({
-          title: 'Deleting workout',
-          message: 'Are you sure you want to <b>delete</b> this workout? This action cannot be undone.',
-          confirmText: 'Delete Workout',
-          type: 'is-danger',
-          onConfirm: () => this.deleteWorkout()
-      })
+        title: "Deleting workout",
+        message:
+          "Are you sure you want to <b>delete</b> this workout? This action cannot be undone.",
+        confirmText: "Delete Workout",
+        type: "is-danger",
+        onConfirm: () => this.deleteWorkout(),
+      });
     },
   },
 };

@@ -7,7 +7,7 @@
         :key="workout.name"
       >
         <ul>
-          <li v-for="exercise in workout.exercises" :key="exercise.id">
+          <li v-for="exercise in workout.exercises" :key="exercise.uid">
             <SingleExercise
               v-on:new-data="updateCurrentValues"
               v-bind:exercise-name="exercise.name"
@@ -90,7 +90,7 @@
           <div class="card">
             <div class="card-content">
               <div class="dynamic-grid">
-                <div v-for="exercise in filteredExercises" :key="exercise.id">
+                <div v-for="exercise in filteredExercises" :key="exercise.uid">
                   <b-button
                     v-on:click="addExercise(exercise.id)"
                     expanded
@@ -222,7 +222,20 @@ export default {
       },
     },
     filteredExercises() {
-      return this.$store.state.b.workouts[this.activeTab].exercises;
+      //this return all UNIQUE EXERCISES this js JS madness
+      return this.$store.state.b.workouts[this.activeTab].exercises.reduce(
+        (unique, item) => {
+          if (unique.some((elt) => elt.name == item.name)) {
+            return unique;
+          }
+          return [...unique, item];
+        },
+        []
+      );
+      //this returns all exercises (and all rests)
+      //return this.$store.state.b.workouts[this.activeTab].exercises;
+
+      //this returns all exercises (and no rests)
       // return this.$store.state.b.workouts[this.activeTab].exercises.filter(
       //   (item) => {
       //     return item.name != "Rest";

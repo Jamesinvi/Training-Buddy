@@ -9,6 +9,7 @@ import 'buefy/dist/buefy.css'
 
 
 import Workout from "./components/Workout.vue"
+import WorkoutModify from "./components/WorkoutModify.vue"
 import Login from "./components/Login.vue"
 import Profile from "./components/Profile.vue"
 import History from "./components/History.vue"
@@ -65,7 +66,7 @@ const moduleB = {
           {
             name: "Rest",
             description: "recupero",
-            id: 11,
+            id: 2,
             time: 30,
             weight: 0,
             reps: 0,
@@ -89,7 +90,7 @@ const moduleB = {
           {
             name: "Rest",
             description: "recupero",
-            id: 12,
+            id: 2,
             time: 30,
             weight: 0,
             reps: 0,
@@ -112,7 +113,7 @@ const moduleB = {
           {
             name: "Rest",
             description: "recupero",
-            id: 13,
+            id: 2,
             time: 60,
             weight: 0,
             reps: 0,
@@ -184,7 +185,7 @@ const moduleB = {
           {
             name: "Rest",
             description: "recupero",
-            id: 11,
+            id: 2,
             time: 30,
             weight: 0,
             reps: 0,
@@ -208,7 +209,7 @@ const moduleB = {
           {
             name: "Rest",
             description: "recupero",
-            id: 12,
+            id: 2,
             time: 30,
             weight: 0,
             reps: 0,
@@ -231,7 +232,7 @@ const moduleB = {
           {
             name: "Rest",
             description: "recupero",
-            id: 13,
+            id: 2,
             time: 60,
             weight: 0,
             reps: 0,
@@ -358,10 +359,10 @@ const moduleB = {
         console.log("commit had null argument");
       }
     },
-    logout({commit}){
+    logout({ commit }) {
       commit("SET_LOGGED_IN", false);
       commit("SET_USER", null);
-      commit("SET_PROFILE_DATA",  {
+      commit("SET_PROFILE_DATA", {
         goal: null,
         height: null,
         dateOfBirth: Date,
@@ -395,7 +396,7 @@ const moduleA = {
     },
   },
   actions: {
-    logout({commit}){
+    logout({ commit }) {
       commit("setCompletedWorkouts", null);
     }
   }
@@ -421,6 +422,7 @@ const routes = [
   { path: "/workout", name: "Workout", component: Workout, meta: { requiresAuth: true, } },
   { path: "/profile", name: "Profile", component: Profile, meta: { requiresAuth: true, } },
   { path: "/history", name: "History", component: History, meta: { requiresAuth: true, } },
+  { path: "/workout-modify:id", name: "WorkoutModify", component: WorkoutModify, meta: { requiresAuth: true, } },
 ]
 
 // 3. Create the router instance and pass the `routes` option
