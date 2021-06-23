@@ -324,6 +324,24 @@ const moduleB = {
           },
         ],
       },
+      {
+        name: "Tennis",
+        duration: "3600",
+        exercises: [
+          {
+            name: "Tennis",
+            description: "Brief description here",
+            id: 9,
+            time: 0,
+            reps: 1,
+            weight: 0,
+            rest: 0,
+            type: "full",
+            tag: "full body",
+            usertag: "",
+          },
+        ],
+      },
     ],
     user: {
       loggedIn: false,
